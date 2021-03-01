@@ -20,7 +20,6 @@ def initialize_parameters(
         Tuple[Tensor, Tensor, Tensor, Tensor]: weights and biases for 2 layers
     """
     # TODO: implement this function
-    return W1, b1, W2, b2
 
 
 def forward_propagation(
@@ -36,10 +35,9 @@ def forward_propagation(
         b2 (Tensor): (n2, 1) bias matrix
 
     Returns:
-        Tuple[Tensor, Tensor]: activations/outputs for layers 1 and 2
+        Tuple[Tensor, Tensor]: outputs for layers 1 (n1, m) and 2 (n2, m)
     """
     # TODO: implement this function
-    return A1, A2.T
 
 
 def get_predictions_sigmoid(
@@ -70,7 +68,7 @@ def backward_propagation(
         A0 (Tensor): (n0, m) input matrix (aka X)
         A1 (Tensor): (n1, m) output of layer 1 from forward propagation
         A2 (Tensor): (n2, m) output of layer 2 from forward propagation
-        Y (Tensor): (m, 1) correct targets (aka labels)
+        Y (Tensor): (n2, m) correct targets (aka labels)
         W2 (Tensor): (n2, n1) weight matrix)
 
     Returns:
@@ -111,12 +109,12 @@ def update_parameters(
     return W1, b1, W2, b2
 
 
-def compute_cost(A2: Tensor, Y: Tensor) -> float:
+def compute_cost(A2: Tensor, Y: Tensor) -> Tensor:
     """Compute cost using binary cross entropy loss.
 
     Args:
-        A2 (Tensor): (m, 1) matrix of neural network output values
-        Y (Tensor): (m, 1) correct targets (aka labels)
+        A2 (Tensor): (n2, m) matrix of neural network output values
+        Y (Tensor): (n2, m) correct targets (aka labels)
 
     Returns:
         float: computed cost
@@ -137,7 +135,7 @@ def learn(
 
     Args:
         X (Tensor): (nx, m) matrix of input features
-        Y (Tensor): (m, 1) matrix of correct targets (aka labels)
+        Y (Tensor): (n2, m) matrix of correct targets (aka labels)
         num_hidden (int): number of neurons in layer 1
         param_scale (float): scaling factor for initializing parameters
         num_epochs (int): number of training passes through all data
